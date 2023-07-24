@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 02</title>
+</head>
+
+<body>
+  <script>
+    /*
+    TODO:creare un arraycon un numero casuale di  numeri interi e per ognuno di essi mandate a schermo se si tratta di un numero pari o dispari.
+
+    il numero casuale degli elementi deve essere generato dal programma e non messo manualmente. Inoltre, potete scegliere se mandare a schiermo con semplici console log, oppure creare elementi da inserire nell'HTML
+ */
+    //CREAZIONE ARRAY
+    let arr = []
+
+    //TROVARE QUANTITA DI ELEMENTI
+    const NUMERO_ELEMENTI = 10
+
+    // IL NUMERO MASSIMO DI ELEMENTI
+    const MAX = 100
+
+    // inserire nell'array per 10 volte un numero a caso
+    for (let i = 0; i < NUMERO_ELEMENTI; i++) {
+      // arr.push(Math.random() * MAX)
+      arr.push(Math.floor(Math.random() * MAX))
+    }
+    //per ogni elemento 
+    arr.forEach(numero => {
+      // //capire se è pari o dispari
+      // if (numero % 2 === 0) {
+      //   // console.log(numero + " è pari")
+      //   console.log(`${ numero } è pari`)
+      // } else {
+      //   // console.log(numero + " è dispari")
+      //   console.log(`${ numero } è dispari`)
+      // }
+
+      /*
+      let tipo = '';
+      if(numero % 2 === o) {
+        tipo = 'pari';
+      }else{
+        tipo = 'dispari';
+      }
+      console.log(`${numero} è ${tipo}`)
+      */
+      let tipo = (numero % 2 === 0) ? 'pari' : 'dispari'
+      console.log(`${ numero } è ${ tipo }`)
+    })
+    // console.log(arr)
+
+  </script>
+
+</body>
+
+</html>

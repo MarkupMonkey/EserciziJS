@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 10</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #myInput {
+      background-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex">
+    <div class="border-2 flex w-1/2 h-96">
+      <div class="color-picker bg-red-500 w-1/4"></div>
+      <div class="color-picker bg-orange-500 w-1/4"></div>
+      <div class="color-picker bg-yellow-500 w-1/4"></div>
+      <div class="color-picker bg-pink-500 w-1/4"></div>
+    </div>
+    <div id="preview" class="border-2 flex flex-col w-1/2 h-96 flex justify-center items-center text-xl">
+      <h1>preview: </h1>
+      <br>
+      <input type="text" id="myInput">
+      <button id="copyButton" class="border-4">Copy</button>
+    </div>
+  </div>
+  <script>
+    const PREVIEW = document.getElementById("preview")
+    const COLOR_PICKERS = document.querySelectorAll(".color-picker")
+    const COLOR_PREVIEW_INPUT = document.getElementById('myInput'); // Seleziona l'elemento input con id "myInput"
+    const COPY_BUTTON = document.getElementById('copyButton'); // Seleziona il pulsante con id "copyButton"
+    // /** hardcoded */
+
+    // document.getElementById("cp1").addEventListener("mouseover", (e) => { console.log("sono sopra il rosso") })
+    // console.log(COLOR_PICKERS)
+
+    /**dinamicamente*/
+    COLOR_PICKERS.forEach(colorPicker => {
+      colorPicker.addEventListener("click", (element) => {
+        console.log(getComputedStyle(element.srcElement).backgroundColor)
+        PREVIEW.style.backgroundColor = getComputedStyle(element.srcElement).backgroundColor
+
+        // Mostrare l'rgb nel <p>
+        const color = getComputedStyle(element.srcElement).backgroundColor;
+        console.log(color);
+        PREVIEW.style.backgroundColor = color;
+        COLOR_PREVIEW_INPUT.value = color;
+      })
+    })
+
+    COPY_BUTTON.addEventListener("click", function () {
+      COLOR_PREVIEW_INPUT.select(); // Seleziona il testo nel campo di input
+      document.execCommand("copy"); // Copia il testo selezionato
+    })
+
+  </script>
+</body>
+
+</html>

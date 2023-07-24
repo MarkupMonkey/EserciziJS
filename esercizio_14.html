@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <title>Esercizio_14</title>
+  <style>
+    body {
+      background-color: gray;
+    }
+
+    #card {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Modifica card dinamicamente</h1>
+
+  <section>
+    <div>
+      <label for="immagine"></label>
+      <input type="text" id="immagine">
+    </div>
+    <div>
+      <label for="colore-titolo">Colore Titolo</label>
+      <input type="color" id="colore-titolo">
+    </div>
+    <div>
+      <label for="colore-paragrafo">Colore Testo</label>
+      <input type="color" id="colore-paragrafo">
+    </div>
+    <div>
+      <label for="padding-x">Spazio Orizzontale</label>
+      <input type="number" id="padding-x">
+    </div>
+    <div>
+      <label for="padding-y">Spazio Verticale</label>
+      <input type="number" id="padding-y">
+    </div>
+    <div>
+      <label for="padding-y">Bordi Arrotondati</label>
+      <input type="number" id="border-radius">
+    </div>
+  </section>
+
+  <div id="card">
+    <img
+      src="https://images.unsplash.com/photo-1682687981907-170c006e3744?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=900&q=60"
+      alt="immagine a piacere">
+    <h2>Titolo della card</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, pariatur deserunt. Eveniet reiciendis, ipsa,
+      exercitationem quibusdam repellat facere animi vero minima temporibus, commodi blanditiis veniam. Eos amet ad
+      labore dolor, porco!
+    </p>
+
+  </div>
+
+  <script>
+    //https://images.unsplash.com/photo-1690040158054-04a19549b43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60
+
+    //https://images.unsplash.com/photo-1689874099574-b2c02629348b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60
+
+    const ELEMENTO_IMMAGINE = document.getElementById("immagine")
+    const COLORE_TITOLO = document.getElementById("colore-titolo")
+    const COLORE_PARAGRAFO = document.getElementById("colore-paragrafo")
+    const PADDING_X = document.getElementById("padding-x")
+    const PADDING_Y = document.getElementById("padding-y")
+    const BORDER_RADIUS = document.getElementById("border-radius")
+    const CARD = document.getElementById("card")
+
+    ELEMENTO_IMMAGINE.addEventListener("input", (e) => {
+      const IMMAGINE = document.querySelector("#card img")
+      IMMAGINE.src = e.target.value
+    })
+
+    COLORE_TITOLO.addEventListener("input", (e) => {
+
+      const TITOLO = document.querySelector("#card h2");
+      TITOLO.style.color = e.target.value
+    })
+
+
+    COLORE_PARAGRAFO.addEventListener("input", (e) => {
+
+      const PARAGRAFO = document.querySelector("#card p");
+      PARAGRAFO.style.color = e.target.value
+    })
+
+
+
+    PADDING_X.addEventListener("input", (e) => {
+
+      const DIV = document.querySelector("#card");
+      DIV.style.paddingLeft = `${ e.target.value }px`
+    })
+
+    PADDING_Y.addEventListener("input", (e) => {
+
+      const DIV = document.querySelector("#card");
+      DIV.style.paddingRight = `${ e.target.value }px`
+    })
+
+    BORDER_RADIUS.addEventListener("input", (e) => {
+      const CARD = document.getElementById("card");
+      const IMMAGINE = document.querySelector("#card img")
+
+      CARD.style.borderRadius = `${ e.target.value }px`
+      IMMAGINE.style.borderTopLeftRadius = `${ e.target.value }px`
+      IMMAGINE.style.borderTopRightRadius = `${ e.target.value }px`
+    })
+
+  </script>
+</body>
+
+</html>

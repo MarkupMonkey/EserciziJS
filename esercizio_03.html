@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 03</title>
+</head>
+
+<body>
+  <script>
+    //Sommare elementi di un array
+
+    /*
+    Creare un array di tot elementi casuali e calcolare la somma totale. L'array deve essere generato casualmente per numero di elementi ed il loro valore (Riferimento a classe Math)'
+    */
+
+    // let arr = [1,2,3,4,5,6,7,8,9,10] // hardcodato
+
+
+    let arr = [];
+
+    const NUMERO_ELEMENTI = 3;
+    const MAX = 10;
+    // se dobbiamo fare azioni ripetutamente
+    for (let i = 0; i < NUMERO_ELEMENTI; i++) {
+      arr.push(Math.floor(Math.random() * MAX))
+    }
+    console.log(arr)
+
+    let somma = 0;
+    arr.forEach(numero => {
+      // somma = somma + numero
+      somma += numero
+    });
+
+
+    console.log(`La somma è ${ somma }`)
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>

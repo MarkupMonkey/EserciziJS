@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 12 - Todo List</title>
+</head>
+
+<body>
+  <h1>Todo List</h1>
+  <input id="new-task" type="text" placeholder="cosa devi fare?">
+  <button id="new-task-btn">Aggiungi Task</button>
+  <button id="clear-btn">Pulisci</button>
+  <div id="todo"></div>
+
+  <script>
+
+    class TODOList {
+      constructor () {
+        this.tasks = this.caricaTask();
+        this.generaTask();
+        console.log("TODOList", this.tasks)
+      }
+
+      aggiungiTask(task) {
+        this.tasks.push(task)
+        this.generaNuovoTask(task);
+        console.log("tasks", this.tasks)
+        localStorage.setItem("tasks", JSON.stringify(this.tasks))
+      }
+
+      concludiTask(task) {
+        console.log(`${ task } completato!`)
+        const INDEX = this.tasks.indexOf(task)
+        this.tasks.splice(INDEX, 1)
+        localStorage.setItem("tasks", JSON.stringify(this.tasks))
+        console.log(this.tasks)
+        console.log(INDEX)
+        console.log(this.tasks[INDEX])
+
+      }
+
+      caricaTask() {
+        const TASKS = JSON.parse(localStorage.getItem("tasks")) ?? [];
+        return TASKS
+      }
+
+      generaNuovoTask(task) {
+        const TODO = document.getElementById("todo");
+        const P = document.createElement("p");
+        P.appendChild(document.createTextNode(task))
+        TODO.appendChild(P)
+        P.addEventListener("click", (e) => {
+          this.concludiTask(task)
+          e.srcElement.remove();
+          console.log(e.srcElement)
+        })
+      }
+
+      generaTask() {
+        this.tasks.forEach(task => {
+          const TODO = document.getElementById("todo");
+          const P = document.createElement("p");
+          P.appendChild(document.createTextNode(task))
+          TODO.appendChild(P);
+          P.addEventListener("click", (e) => {
+            this.concludiTask(task)
+            e.srcElement.remove();
+            console.log(e.srcElement)
+          })
+        });
+      }
+    }
+
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const NEW_TASK_BTN = document.getElementById("new-task-btn");
+      const CLEAR_BTN = document.getElementById("clear-btn")
+      const INPUT = document.getElementById("new-task");
+
+      const TODO_LIST = new TODOList()
+
+      NEW_TASK_BTN.addEventListener("click", () => {
+        console.log("new task: ", INPUT.value)
+        TODO_LIST.aggiungiTask(INPUT.value)
+      })
+
+      CLEAR_BTN.addEventListener("click", () => {
+        console.log("pulisci task")
+      })
+
+      INPUT.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          console.log("new task: ", INPUT.value)
+          TODO_LIST.aggiungiTask(INPUT.value)
+          INPUT.value = ''
+        }
+      })
+    })
+
+  </script>
+</body>
+
+</html>

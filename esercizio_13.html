@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 13 - Generatore password complesse</title>
+</head>
+
+<body>
+  <h1>Generatore password complesse</h1>
+  <div>
+    <label for="lunghezza">Lunghezza</label>
+    <input type="number" id="lunghezza" min="5" max="20" value="10">
+  </div>
+
+  <div>
+    <label for="caratteri-minuscoli">Caratteri Minuscoli</label>
+    <input type="checkbox" id="caratteri-minuscoli" checked>
+  </div>
+
+  <div>
+    <label for="caratteri-maiuscoli">Caratteri Maiuscoli</label>
+    <input type="checkbox" id="caratteri-maiuscoli" checked>
+  </div>
+
+  <div>
+    <label for="caratteri-numerici">Lunghezza</label>
+    <input type="checkbox" id="caratteri-numerici" checked>
+  </div>
+
+  <div>
+    <label for="caratteri-speciali">Caratteri Speciali</label>
+    <input type="checkbox" id="caratteri-speciali" checked>
+  </div>
+
+  <button id="genera-btn">Genera Password</button>
+  <div id="risultato"></div>
+  <script>
+    const LUNGHEZZA_PASSWORD = document.getElementById("lunghezza")
+    const CARATTERI_MINUSCOLI = document.getElementById("caratteri-minuscoli")
+    const CARATTERI_MAIUSCOLI = document.getElementById("caratteri-maiuscoli")
+    const CARATTERI_NUMERICI = document.getElementById("caratteri-numerici")
+    const CARATTERI_SPECIALI = document.getElementById("caratteri-speciali")
+    const GENERA_BTN = document.getElementById("genera-btn")
+    const RISULTATO_DIV = document.getElementById("risultato")
+
+    const LISTA_CARATTERI_MINUSCOLI = "abcdefghijklmnopqrstuvwxyz"
+    const LISTA_CARATTERI_MAIUSCOLI = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    const LISTA_CARATTERI_NUMERICI = "0123456789"
+    const LISTA_CARATTERI_SPECIALI = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~)"
+    GENERA_BTN - addEventListener("click", generaPassword)
+
+    function generaPassword() {
+      /** let stringaIniziale = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~)";
+
+      let risultato = stringaIniziale mischiata limitata a 10 caratteri
+*/
+
+
+      let stringaIniziale = "";
+      let risultato = "";
+
+      if (CARATTERI_MINUSCOLI.checked) stringaIniziale += LISTA_CARATTERI_MINUSCOLI
+      if (CARATTERI_MAIUSCOLI.checked) stringaIniziale += LISTA_CARATTERI_MAIUSCOLI
+      if (CARATTERI_NUMERICI.checked) stringaIniziale += LISTA_CARATTERI_NUMERICI
+      if (CARATTERI_SPECIALI.checked) stringaIniziale += LISTA_CARATTERI_SPECIALI
+      console.log(stringaIniziale)
+
+      for (let i = 0; i < LUNGHEZZA_PASSWORD.value; i++) {
+        /* prendere randomicamente 10 volte*/
+        risultato += stringaIniziale.charAt(
+          Math.floor((Math.random() * stringaIniziale.length))
+        )
+
+        RISULTATO_DIV.innerHTML = "";
+        RISULTATO_DIV.innerHTML = risultato;
+        console.log(risultato)
+      }
+
+      /*TODO: fare in modo che la password venga generata nonappena si decide il numero di caratteri*/
+    }
+  </script>
+</body>
+
+</html>

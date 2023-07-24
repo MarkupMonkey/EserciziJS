@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 09 - barra di ricerca con autocomplete</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <section class="m-5 p-5">
+    <input type="text" class="border-2 o-2" placeholder="chi stai cercando?" id="ricerca">
+    <div id="risultati" class="border-2 p-2"></div>
+  </section>
+  <script>
+    const INPUT = document.getElementById("ricerca");
+    INPUT.addEventListener("keyup", autocomplete) //non mettiamo le parentesi per non farla lanciare subito, nel momento in cui definisco il metodo, 
+    // quindi sto dicendo "quando succede mi richiami questa e la lanci" 
+    const RISULTATI = document.getElementById("risultati");
+    const NOMI = [
+      "andrea",
+      "anna",
+      "marco",
+      "luca",
+      "giovanni",
+      "giovanna",
+      "chiara",
+      "clara",
+      "maurizio",
+      "riccardo",
+      "jhonny",
+      "jack",
+    ]
+
+    function autocomplete(event) {
+      // console.log(event.target.value)
+      let nomiConsigliati = "";
+      // const NOMI_TROVATI = ["andrea", "anna", "giovanna"] // hardcodati
+      const NOMI_TROVATI = autocompleteMatch(event.target.value)
+      NOMI_TROVATI.forEach((termine) => { nomiConsigliati += `<li class="hover:bg-gray-200" onclick="seleziona(event)">${ termine }</li>` });
+      RISULTATI.innerHTML = `<ul>${ nomiConsigliati }</ul>`;
+    }
+
+    function seleziona(event) {
+      RISULTATI.innerHTML = "";
+      INPUT.value = event.target.value
+      console.log(event.target.textContent)
+    }
+
+    function autocompleteMatch(valore) {
+      if (valore == '') return []
+      const reg = new RegExp(valore) //creazione regez
+      return NOMI.filter(nome => { if (nome.match(reg)) return nome })
+    }
+
+  </script>
+</body>
+
+</html>

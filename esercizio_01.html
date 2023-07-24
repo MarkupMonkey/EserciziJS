@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 01</title>
+</head>
+
+<body>
+  <script>
+    const oggi = new Date()
+    console.log(oggi)
+    //vogliamo formattarla 
+    /*creare array con le opzioni dentro
+    */
+    const options = [
+      // {
+      //   year: "numeric",
+      //   month: "2-digit",
+      //   day: "2-digit",     // martedì 11/07/2023
+      //   weekday: "long",
+      //   hour12: false
+      // }
+
+      // {
+      //   year: "numeric",
+      //   month: "2-digit", // mar 11/07/2023
+      //   day: "2-digit",
+      //   weekday: "short"
+      // }
+
+      // {
+      //   hour: "2-digit",
+      //   minute: "2-digit", // 11:23:07 11:23:07 AM 
+      //   second: "2-digit",
+      //   hour12: true
+      // }
+
+      // mer 11/07/2023
+
+
+      {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        weekday: "long"
+      },
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      },
+      {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      }
+    ]
+
+
+    // console.log(oggi.toLocaleString(undefined, options[2]))
+    // options.forEach(option => {
+    //   const element = document.createElement("h2")
+    //   const text = document.createTextNode("11/07/2023")
+    //   element.appendChild(text)
+    //   document.querySelector("body").appendChild(element)
+    // });
+
+
+    console.log(oggi.toLocaleString(undefined, options[2]))
+    options.forEach(option => {
+      const element = document.createElement("h2")
+      const dataFormattata = oggi.toLocaleString(undefined, option)
+      const text = document.createTextNode(dataFormattata)
+      element.appendChild(text)
+      document.querySelector("body").appendChild(element)
+    });
+
+
+  </script>
+</body>
+
+</html>

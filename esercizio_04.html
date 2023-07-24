@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 04 </title>
+</head>
+
+<body>
+
+  <!--- DIFFERENZA TRA DUE DATE IN GIORNI 
+
+  Creare due input html di tipo datepicker, ed al click di un bottore calcolare la differenza tra la data2 e la data1. Assicurandoci che la seconda data sia maggiore della prima-->
+  <div>
+    <label for="data1">Data Inizio</label>
+    <input type="date" id="data1">
+  </div>
+  <div>
+    <label for="data2">Data fine</label>
+    <input type="date" id="data2">
+  </div>
+  <button onclick="calcola()">Calcola</button>
+
+
+  <script>
+    const DATA_INIZIO = document.getElementById('data1')
+    const DATA_FINE = document.getElementById('data2')
+
+
+    // const calcola = () => {
+    //   console.log(new Date((DATA_INIZIO).value))
+    // }
+
+    /*ad esempio un neonato 
+    se volessi calcolare la differenza di età tra me e un neonato
+    se ha 3 mesi e io ho 30 anni non è 30 anni ma 29 anni e 9 mesi */
+
+
+    /*
+    CONVERTIRE GLI ANNI IN MESI
+    30 anni = 360 mesi - 3 =  357 /012 = 29,...
+    */
+
+
+
+    const calcola = () => {
+      const DATA_INIZIO_MS = (new Date(DATA_INIZIO.value).getTime())
+      const DATA_FINE_MS = new Date(DATA_FINE.value).getTime()
+      // dal 1 gennaio 1970 00:00 data in cui i pc hanno iniziato a contare
+      // giorno dopo 60x60x24 = 86400 = 1 giorno 
+      // 60x60x24 x 2 = 2 giorni
+      console.log(`Data iniziale in millisecondi : ${ DATA_INIZIO_MS }`)
+      console.log(`Data finale in millisecondi ${ DATA_FINE_MS }`)
+      console.log(`Differenza tra le date in millisecondi: ${ DATA_FINE_MS - DATA_INIZIO_MS }`)
+
+      //verificare che data fine sia maggire di data inizio
+
+      if (DATA_INIZIO_MS < DATA_FINE_MS) {
+        //togliere i millisecondi (1000)
+        // ritrovare il giorno 60 x 60 x 24
+        const DIFFERENZA = DATA_FINE_MS - DATA_INIZIO_MS
+        const GIORNI_DIFFERENZA = DIFFERENZA / (1000 * 60 * 60 * 24)
+        console.log(`Differenza in giorni: ${ GIORNI_DIFFERENZA }`)
+      }
+
+
+    }
+
+  </script>
+
+</body>
+
+</html>
