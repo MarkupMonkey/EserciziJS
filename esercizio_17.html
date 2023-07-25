@@ -14,7 +14,13 @@
 </style>
 
 <body>
-  <div class="flex flex-row p-10 m-10 h-[700px] gap-10">
+  <div class="task-input mb-4">
+    <input type="text" id="newTaskInput" class="border-2 border-gray-300 p-2 rounded-md w-80 m-10"
+      placeholder="Inserisci un nuovo task">
+    <button id="addTaskButton" class="p-2 ml-2 bg-blue-500 text-white rounded-md" (onclick)="addNewTask()">Aggiungi
+      task</button>
+  </div>
+  <div class="flex flex-row px-4 h-[700px] gap-10">
 
     <div class="colonna rounded-xl bg-slate-200 p-10 w-80 flex flex-col gap-4 justify-start" data-column="0">
       <h2 class="text-2xl text-center font-bold mb-4">In Coda</h2>
@@ -178,6 +184,45 @@
           TARGET_COLUMN.appendChild(ELEMENT)
         })
       })
+    }
+    /*creazione */
+    document.getElementById('addTaskButton').addEventListener('click', addNewTask);
+
+    function addNewTask() {
+      const input = document.getElementById('newTaskInput');
+      const newTaskName = input.value.trim();
+
+      if (newTaskName !== "") {
+        // Find the highest existing task id
+        let maxId = 0;
+        for (const column of data) {
+          for (const task of column.tasks) {
+            maxId = Math.max(maxId, task.id);
+          }
+        }
+
+        const newTask = {
+          id: maxId + 1,
+          name: newTaskName,
+        };
+
+        // Add the new task to the "In Coda" column
+        data[0].tasks.push(newTask);
+        localStorage.setItem("data", JSON.stringify(data));
+
+        // Clear the input field
+        input.value = "";
+
+        // Refresh the tasks display
+        refreshTasks();
+      }
+    }
+
+    function refreshTasks() {
+      for (let column of document.querySelectorAll('.colonna')) {
+        column.innerHTML = '';
+      }
+      generateTasks();
     }
 
   </script>
