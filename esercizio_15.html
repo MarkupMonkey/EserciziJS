@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 15</title>
+</head>
+
+<body>
+  <script>
+    const DATA = {
+      users: {
+        qwertyuiop: {
+          firstname: "gigino",
+          lastname: "gnogni"
+        },
+        dfghjkl: {
+          firstname: "mirkoww",
+          lastname: "verdi"
+        }
+      }
+    }
+
+    /*passare a rassegna*/
+    const USERS = []
+    // console.log(data)
+    // console.log(data.users)
+    console.log(Object.keys(DATA.users))
+    // console.log(Object.keys(data))
+
+    for (let key of Object.keys(DATA.users)) {
+      USERS.push({ id: key, ...DATA.users[key] })
+    }
+
+    console.log(USERS)
+
+
+  </script>
+</body>
+
+</html>
