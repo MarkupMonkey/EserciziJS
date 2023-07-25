@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 16</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="h-[300px] fòex justify-center items-center">
+    <input type="text" id="search-bar"
+      class="rounded-xl border-2 border-slate-500 m-auto w-[700px] h-20 p-10 text-3xl font-bold">
+
+    <div id="pokedex" class="flex flex-wrap"></div>
+  </div>
+
+  <script>
+    /**Fetchare i dati*/
+    let pokemon;
+    let filteredPokemon;
+    fetch("pokemon.json-master/pokedex.json")
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        pokemon = data.slice(0, 151); //prendo da 0 a 150 -> da id 0 a 151
+        console.log(pokemon)
+        generateCards(pokemon)
+      })
+      .catch(err => { })
+    //generiamo le cards
+    function generateCards(listaPokemon) {
+      //generare elementi html
+      // prendere le immagini, formattare gli id 
+      const POKEDEX = document.getElementById("pokedex");
+      //puliamo le cards che c'erano prima
+      // POKEDEX.innerHTML = ""; OPPURE...
+      while (POKEDEX.firstChild) {
+        POKEDEX.removeChild(POKEDEX.firstChild)
+      }
+      listaPokemon.forEach(singlePokemon => {
+        const CARD = `<div class="inline-block rounded-xl m-auto max-w-[200px] p-5 hover:bg-slate-200">
+          <img src="pokemon.json-master/images/${ formatID(singlePokemon.id) }.png">
+          <h3>${ singlePokemon.name.english }</h3>
+          </div>`
+        POKEDEX.insertAdjacentHTML("beforeend", CARD)
+      });
+    }
+
+    function formatID(id) {
+      console.log(id.toString().length)
+      /**-> 9 - 1 carattere -> aggiungere 2 zeri
+            90 - 2 caratteri -> aggiungere 1 zero
+            52 - 3 caratteri -> apposto così*/
+      //se ha 1 carattere aggiungere due zeri;
+      if (id.toString().length == 1) return `00${ id }`
+      //se ha 2 carattere aggiungere uno zero;
+      if (id.toString().length == 2) return `0${ id }`
+      //altrimenti niente;
+      return id
+    }
+
+
+    /** aggiungere filtro */
+
+    const SEARCH_BAR = document.getElementById("search-bar")
+    SEARCH_BAR.addEventListener("keyup", (event) => {
+      console.log(event.target.value)
+      let filteredPokemon = []
+      //differenza tra bulbasaur e type:Grass 
+      if (event.target.value.startsWith("type:")) {
+        // console.log("Effettuo ricerca per tipo")
+        //type: e vogliamo filtrare per il tipo ... che non è "type: " ma il valore dopo
+        const VALUE = event.target.value.replace("type:", "");
+        filteredPokemon = pokemon.filter(pkmn => {
+          //vediamo se l'array ha quest'elemento
+          return pkmn.type.indexOf(VALUE) != -1;//l'indice che otteniamo per valori che non esistono'
+          console.log()
+        })
+      } else {
+        console.log(pokemon, "PRIMA")
+        // console.log("Effettuo ricerca per nome")
+        filteredPokemon = pokemon.filter(pkmn => { //assegno a se stesso filtrato
+          /*teoricamente ha senso questa logica, ma si vanno a perdere perchè sono filtrati da pokemon (151)  nel momento in cui li filtriamo divanetano (9)*/
+          return pkmn.name.english.startsWith(event.target.value)
+        })
+
+        // console.log(filteredPokemon, "DOPO")
+      }
+      //ogni volta che filtriamo vogliamo generare nuove card
+      generateCards(filteredPokemon)
+    })
+
+
+  </script>
+</body>
+
+</html>
