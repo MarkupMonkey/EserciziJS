@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio 17</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="flex flex-row p-10 m-10 h-[700px] gap-10">
+
+    <div class="colonna rounded-xl bg-slate-200 p-10 w-80 flex flex-col gap-4 justify-start" data-column="0">
+      <h2 class="text-2xl text-center font-bold mb-4">In Coda</h2>
+      <!-- <div class="task p-4 rounded-xl shadow-xl bg-white" draggable="true" data-task="0">
+        Rispondere alle email
+      </div>
+      <div class="task p-4 rounded-xl shadow-xl bg-white" draggable="true" data-task="1">
+        Allenare gambe
+      </div>
+      <div class="task p-4 rounded-xl shadow-xl bg-white" draggable="true" data-task="2">
+        Ricaricare credito telefono
+      </div>
+      <div class="task p-4 rounded-xl shadow-xl bg-white" draggable="true" data-task="3">
+        Prenotare visita dentista
+      </div> -->
+    </div>
+    <div class="colonna rounded-xl bg-slate-200 p-10 w-80 flex flex-col gap-4 justify-start" data-column="1">
+      <h2 class="text-2xl text-center font-bold mb-4">Aperto</h2>
+    </div>
+    <div class="colonna rounded-xl bg-slate-200 p-10 w-80 flex flex-col gap-4 justify-start" data-column="2">
+      <h2 class="text-2xl text-center font-bold mb-4">In Revisione</h2>
+    </div>
+    <div class="colonna rounded-xl bg-slate-200 p-10 w-80 flex flex-col gap-4 justify-start" data-column="3">
+      <h2 class="text-2xl text-center font-bold mb-4">Completato</h2>
+    </div>
+  </div>
+  <script>
+
+    /*DATI CHE ARRIVANO DA SERVER*/
+
+    const placeholderData = [
+      {
+        id: 0,
+        name: "In Coda",
+        tasks: [
+          { id: 0, name: "Rispondere alle email" },
+          { id: 1, name: "Allenare gambe" },
+          { id: 2, name: "Ricaricare credito telefono" },
+          { id: 3, name: "Prenotare visita dentista" },
+        ],
+      },
+      {
+        id: 1,
+        name: "Aperto",
+        tasks: [],
+      },
+      {
+        id: 2,
+        name: "In Revisione",
+        tasks: [],
+      },
+      {
+        id: 3,
+        name: "Completato",
+        tasks: [],
+      },
+    ];
+    let data = localStorage.getItem("data")
+      ? JSON.parse(localStorage.getItem("data"))
+      : placeholderData;
+
+    generateTasks();
+
+    const TASKS = document.querySelectorAll(".task");
+    const COLUMNS = document.querySelectorAll(".colonna");
+    let dragItem = null;
+    let dragData = null;
+
+    TASKS.forEach((task) => {
+      task.addEventListener("dragstart", dragStart);
+      task.addEventListener("dragend", dragEnd);
+    });
+    COLUMNS.forEach((colonna) => {
+      colonna.addEventListener("dragover", dragOver);
+      colonna.addEventListener("dragenter", dragEnter);
+      colonna.addEventListener("dragleave", dragLeave);
+      colonna.addEventListener("drop", dragDrop);
+    });
+    // TASKS
+
+    function dragStart() {
+      console.log("dragStart")
+      /*far sparire il task*/
+      setTimeout(() => this.classList.add("hidden"), 100);
+      //creo riferimento
+      dragItem = this
+      //prendo l'id della colonna
+      const INDEX_COLUMN = data.findIndex((colonna) => {
+        return colonna.id == this.parentElement.getAttribute("data-column");
+      })
+      //trovare l'index task
+      const INDEX_TASK = data[INDEX_COLUMN].tasks.findIndex(task => {
+        return task.id == this.getAttribute("data-task")
+      })
+      //voglio partire da zero e prendere uno
+      dragData = data[INDEX_COLUMN].tasks.splice(INDEX_TASK, 1)[0]
+      console.log(dragData, "splicing")
+      localStorage.setItem("data", JSON.stringify(data))
+    }
+
+    function dragStart() {
+      console.log("dragStart");
+      //   /*far sparire il task*/
+      setTimeout(() => this.classList.add("hidden"), 0);
+      //   //creo riferimento
+      dragItem = this;
+      //   //prendo l'id della colonna
+      const indexColonna = data.findIndex((colonna) => {
+        return colonna.id == this.parentElement.getAttribute("data-column");
+      });
+      //   //trovare l'index task
+      const indexTask = data[indexColonna].tasks.findIndex((task) => {
+        return task.id == this.getAttribute("data-task");
+      });
+      //voglio partire da zero e prendere uno
+      dragData = data[indexColonna].tasks.splice(indexTask, 1)[0];
+      console.log("splicing", dragData);
+      localStorage.setItem("data", JSON.stringify(data));
+    }
+
+    function dragEnd() {
+      this.classList.remove("hidden")
+      // console.log("dragEnd")
+      dragItem = null
+      //vogliamo andare a prendere la colonna in qui lo stiamo lasciando
+      data[this.parentElement.getAttribute("data-column")].tasks.push(dragData)
+      console.log(data)
+      localStorage.setItem("data", JSON.stringify(data))
+    }
+
+    // //COLONNE
+
+    function dragOver(e) {
+      e.preventDefault();
+      console.log("dragOver");
+    }
+    function dragEnter() {
+      console.log("dragEnter");
+    }
+    function dragLeave() {
+      console.log("dragLeave");
+    }
+    function dragDrop() {
+      console.log("dragDrop");
+      this.append(dragItem);
+    }
+
+    /* VOGLIO GENERARE I TASK*/
+    function generateTasks() {
+      data.forEach((colonna) => {
+        //per ogni colonan vogliamo prendere ogni effettivo elemento
+        const TARGET_COLUMN = document.querySelector(`[data-column='${ colonna.id }']`)
+        //per orgni task in colonna li appendiamo
+        colonna.tasks.forEach((task) => {
+          const ELEMENT = document.createElement("div")
+          ELEMENT.className = "task p-4 rounded-xl shadow-xl bg-white"
+          ELEMENT.setAttribute("draggable", true)
+          ELEMENT.setAttribute("data-task", task.id)
+          const TEXT = document.createTextNode(task.name)
+          ELEMENT.appendChild(TEXT)
+          TARGET_COLUMN.appendChild(ELEMENT)
+        })
+      })
+    }
+
+  </script>
+</body>
+
+</html>
